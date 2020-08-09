@@ -40,7 +40,7 @@ syntax on                    " 开启文件类型侦测
 filetype plugin indent on    " 启用自动补全
 
 " 退出插入模式指定类型的文件自动保存
-au InsertLeave *.go,*.sh,*.php write
+" au InsertLeave *.go,*.sh,*.php write
 
 "==============================================================================
 " 插件配置 
@@ -48,6 +48,9 @@ au InsertLeave *.go,*.sh,*.php write
 
 " 插件开始的位置
 call plug#begin('~/.vim/plugged')
+
+" tagbar
+Plug 'majutsushi/tagbar'
 
 "搜索
 Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
@@ -96,6 +99,9 @@ Plug 'crusoexia/vim-monokai'
 Plug 'acarapetis/vim-colors-github'
 " colorscheme one 
 Plug 'rakr/vim-one'
+
+" 注释
+Plug 'preservim/nerdcommenter'
 
 " go 主要插件
 Plug 'fatih/vim-go', { 'tag': '*' }
@@ -220,6 +226,43 @@ map <silent> <F6> <Plug>StopMarkdownPreview
 :nn <Leader>9 8gt
 :nn <Leader>0 :tablast<CR>
 
+"==============================================================================
+"  majutsushi/tagbar 插件
+"==============================================================================
+
+" majutsushi/tagbar 插件打开关闭快捷键
+nmap <Leader>lo :TagbarToggle<CR>
+let g:tagbar_ctags_bin = "/usr/local/bin/ctags"
+let g:Lf_Ctags = "/usr/local/bin/gotags"
+let g:tagbar_type_go = {
+	\ 'ctagstype' : 'go',
+	\ 'kinds'     : [
+		\ 'p:package',
+		\ 'i:imports:1',
+		\ 'c:constants',
+		\ 'v:variables',
+		\ 't:types',
+		\ 'n:interfaces',
+		\ 'w:fields',
+		\ 'e:embedded',
+		\ 'm:methods',
+		\ 'r:constructor',
+		\ 'f:functions'
+	\ ],
+	\ 'sro' : '.',
+	\ 'kind2scope' : {
+		\ 't' : 'ctype',
+		\ 'n' : 'ntype'
+	\ },
+	\ 'scope2kind' : {
+		\ 'ctype' : 't',
+		\ 'ntype' : 'n'
+	\ },
+	\ 'ctagsbin'  : 'gotags',
+	\ 'ctagsargs' : '-sort -silent'
+\ }
+
+
 
 "==============================================================================
 " GVim 的配置
@@ -257,7 +300,8 @@ nmap <Leader>fs :w<CR>
 " 退出窗口
 nmap <Leader>q :q<CR>
 " 切换窗口
-nmap <Tab> <C-W>w<CR>
+map <Leader>w <C-W><CR>
+map <Tab> <C-W>w<CR>
 " 快速分屏
 nmap <Leader>sv :vs<CR>
 
@@ -270,5 +314,3 @@ nmap <Leader>sa :LeaderfLineAll<CR>
 nmap <Leader>gd :GoDef<CR>
 nmap <Leader>gi :GoDoc<CR>
 nmap <Leader>gr :GoRun<CR>
-
-nmap <Leader>w <C-W><CR>
